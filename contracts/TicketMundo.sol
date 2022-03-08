@@ -24,14 +24,14 @@ contract Event {
     string public eventName;    
 }
 
-contract ModifyVariable {
+contract TicketMundo {
   uint public x;
   Promoter p1;
 
   constructor(uint _x) {
     console.log("hi from constructor");
-    Promoter p2 = new Promoter("p2", msg.sender, 999);
-    p2.print();
+    p1 = new Promoter("promoter1", msg.sender, 999);
+    p1.print();
 
     x = _x;
   }
