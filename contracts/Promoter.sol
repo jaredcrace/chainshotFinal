@@ -14,6 +14,7 @@ contract Promoter {
     }
 
     function print() public view {
+        console.log("******");
         console.log("promoterName:", promoterName);
         console.log("promoterAddress:", promoterAddress);
         console.log("stakeAmount:", stakeAmount);
