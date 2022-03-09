@@ -12,12 +12,10 @@ describe("TicketMundo", function () {
     for(var i=0; i<10; i++) {
       ticketArray.push(Math.floor(Math.random() * 999999999));
     }
-
-    console.log(ticketArray);
+    //console.log(ticketArray);
 
     const contract = await TicketMundo.deploy(10, ticketArray);
     await contract.deployed();
-
 
     // modify x from 10 to 1337 via this function!
     await contract.modifyToLeet();
