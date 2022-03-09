@@ -1,4 +1,5 @@
 const { expect, assert } = require("chai");
+const { ethers } = require("hardhat");
 
 // to run do the following:
 // > npx hardhat test
@@ -8,6 +9,8 @@ describe("TicketMundo", function () {
     const TicketMundo = await ethers.getContractFactory("TicketMundo");
     const ticketNum = 12;
     const eventId = 9812;
+
+    const [owner, addr1, addr2] = await ethers.getSigners();
 
     // generate some random numbers for tickets
     let ticketArray = [];
@@ -27,7 +30,8 @@ describe("TicketMundo", function () {
       eventId, 
       ticketArray);
 
-    await contract.addEvent(
+    // add an event from a different address
+    await contract.connect(addr1).addEvent(
       "event2", 
       "event2Date", 
       ticketNum, 
