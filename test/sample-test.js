@@ -9,6 +9,7 @@ describe("TicketMundo", function () {
     const TicketMundo = await ethers.getContractFactory("TicketMundo");
     const ticketNum = 12;
     const eventId = 9812;
+    const sellerId = 4532;
 
     const [owner, addr1, addr2] = await ethers.getSigners();
 
@@ -40,7 +41,7 @@ describe("TicketMundo", function () {
 
     await contract.addPromoterToEvent("promoter1Name", 98765, eventId);
 
-    await contract.addSellerToEvent(1000, 20, eventId);
+    await contract.addSellerToEvent(1000, 20, eventId, sellerId);
 
     await contract.printEvents();
 

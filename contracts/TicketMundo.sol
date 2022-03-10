@@ -34,12 +34,12 @@ contract TicketMundo {
     }
   }
 
-  function addSellerToEvent(uint _sellerStake, uint _ticketsToSell, uint eventId) public {
+  function addSellerToEvent(uint _sellerStake, uint _ticketsToSell, uint eventId, uint _sellerId) public {
     // first, find the event
     // TODO: add a revert check here
     for(uint i=0; i<eventList.length; i++){
       if(eventList[i].eventId() == eventId) {
-        eventList[i].addTicketSeller(_sellerStake, _ticketsToSell, msg.sender);
+        eventList[i].addTicketSeller(_sellerStake, _ticketsToSell, _sellerId, msg.sender);
       }
     }
   }
