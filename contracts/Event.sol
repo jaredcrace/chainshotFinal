@@ -2,6 +2,7 @@
 pragma solidity ^0.8.4;
 import "hardhat/console.sol";
 import "contracts/Promoter.sol";
+import "contracts/TicketMundoSeller.sol";
 
 contract Event {
     string public eventName;    
@@ -11,6 +12,7 @@ contract Event {
     uint public eventId;
     address public eventAddress;
     Promoter[] promoterList;
+    TicketMundoSeller[] ticketSellerList;
 
     constructor(
       string memory _name, 
@@ -36,15 +38,19 @@ contract Event {
         promoterList.push(p1);
     }
 
+    function addTicketSeller(uint _stakeAmount, uint _ticektsToSell, address _sender) public {
+        TicketMundoSeller ts = new TicketMundoSeller(_sender, _stakeAmount, _ticektsToSell);
+        ticketSellerList.push(ts);
+    }
+
     function print() public view {
-      console.log("-----------------------------");
+      console.log("----------Event---------------");
       console.log("eventName:", eventName);
       console.log("eventDate:", eventDate);
       console.log("eventAddress:", eventAddress);
       console.log("eventId:", eventId);
       console.log("ticketNum:", ticketNum);
-      console.log("tickets:");
-      console.log("one ticket:", ticketArray[0]);
+      console.log("ticket[0]:", ticketArray[0]);
 
 //      for(uint i=0; i<ticketNum; i++) {
 //        console.log(ticketArray[i]);
@@ -52,6 +58,10 @@ contract Event {
 
       for(uint i=0; i<promoterList.length; i++) {
           promoterList[i].print();
+      }
+
+      for(uint i=0; i<ticketSellerList.length; i++) {
+          ticketSellerList[i].print();
       }
     }
 }
