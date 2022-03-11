@@ -44,6 +44,16 @@ contract TicketMundo {
     }
   }
 
+  function addDelegatorToSeller(uint _eventId, uint _sellerId, uint _delegatorAmount) public {
+    // first, find the event
+    // TODO: add a revert check here
+    for(uint i=0; i<eventList.length; i++){
+      if(eventList[i].eventId() == _eventId) {
+        eventList[i].addDelegatorToSeller(_sellerId, _delegatorAmount, msg.sender);
+      }
+    }
+  }
+
   function printEvents() public view {
     for(uint i=0; i<eventList.length; i++) {
       eventList[i].print();

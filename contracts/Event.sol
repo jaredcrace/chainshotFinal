@@ -43,6 +43,16 @@ contract Event {
         ticketSellerList.push(ts);
     }
 
+    function addDelegatorToSeller(uint _sellerId, uint _delegatorAmount, address _sender) public {
+        // first, find the Seller
+        // TODO: add a revert check here
+        for(uint i=0; i<ticketSellerList.length; i++){
+            if(ticketSellerList[i].sellerId() == _sellerId) {
+                ticketSellerList[i].addDelegator(_delegatorAmount, _sender);
+            }
+        }
+    }
+
     function print() public view {
       console.log("----------Event---------------");
       console.log("eventName:", eventName);

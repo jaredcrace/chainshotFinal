@@ -43,6 +43,8 @@ describe("TicketMundo", function () {
 
     await contract.addSellerToEvent(1000, 20, eventId, sellerId);
 
+    await contract.addDelegatorToSeller(eventId, sellerId, 99887766);
+
     await contract.printEvents();
 
     // getter for state variable x
