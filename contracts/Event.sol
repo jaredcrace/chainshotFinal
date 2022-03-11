@@ -12,7 +12,10 @@ contract Event {
     uint public eventId;
     address public eventAddress;
     Promoter[] promoterList;
-    Seller[] ticketSellerList;
+
+    mapping(uint => Seller) public ticketSellerList;
+    uint[] public sellerIds;
+
 
     constructor(
       string memory _name, 
@@ -38,19 +41,14 @@ contract Event {
         promoterList.push(p1);
     }
 
-    function addTicketSeller(uint _stakeAmount, uint _ticektsToSell, uint _sellerId, address _sender) public {
-        Seller ts = new Seller(_sender, _stakeAmount, _ticektsToSell, _sellerId);
-        ticketSellerList.push(ts);
+    function addTicketSeller(uint stakeAmount, uint ticektsToSell, uint sellerId, address sender) public {
+        Seller ts = new Seller(sender, stakeAmount, ticektsToSell, sellerId);
+        ticketSellerList[sellerId] = ts;
+        sellerIds.push(sellerId);
     }
 
-    function addDelegatorToSeller(uint _sellerId, uint _delegatorAmount, address _sender) public {
-        // first, find the Seller
-        // TODO: add a revert check here
-        for(uint i=0; i<ticketSellerList.length; i++){
-            if(ticketSellerList[i].sellerId() == _sellerId) {
-                ticketSellerList[i].addDelegator(_delegatorAmount, _sender);
-            }
-        }
+    function addDelegatorToSeller(uint sellerId, uint delegatorAmount, address sender) public {
+        ticketSellerList[sellerId].addDelegator(delegatorAmount, sender);
     }
 
     function print() public view {
@@ -70,8 +68,8 @@ contract Event {
           promoterList[i].print();
       }
 
-      for(uint i=0; i<ticketSellerList.length; i++) {
-          ticketSellerList[i].print();
+      for(uint i=0; i<sellerIds.length; i++) {
+          ticketSellerList[sellerIds[i]].print();
       }
     }
 }

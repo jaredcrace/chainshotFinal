@@ -6,11 +6,11 @@ import "contracts/Event.sol";
 
 contract TicketMundo {
   uint public x;
-  Event[] eventList;
+
+  mapping(uint => Event) public eventList;
+  uint[] public eventIds;
 
   constructor() {
-//    p1 = new Promoter("promoter1", msg.sender, 999);
-//    p1.print();
     console.log("hi from constructor");
   }
 
@@ -21,42 +21,29 @@ contract TicketMundo {
     uint _eventId, 
     uint[] memory _ticketArray) public { 
       Event e1 = new Event(_eventName, _eventDate, msg.sender, _ticketNum, _eventId, _ticketArray);
-      eventList.push(e1);
+      eventList[_eventId] = e1;
+      eventIds.push(_eventId);
   }
 
   function addPromoterToEvent(string memory _promoterName, uint _promoterStake, uint eventId) public {
-    // first, find the event
-    // TODO: add a revert check here
-    for(uint i=0; i<eventList.length; i++){
-      if(eventList[i].eventId() == eventId) {
-        eventList[i].addPromoter(_promoterName, _promoterStake, msg.sender);
-      }
-    }
+    eventList[eventId].addPromoter(_promoterName, _promoterStake, msg.sender);
   }
 
   function addSellerToEvent(uint _sellerStake, uint _ticketsToSell, uint eventId, uint _sellerId) public {
-    // first, find the event
-    // TODO: add a revert check here
-    for(uint i=0; i<eventList.length; i++){
-      if(eventList[i].eventId() == eventId) {
-        eventList[i].addTicketSeller(_sellerStake, _ticketsToSell, _sellerId, msg.sender);
-      }
-    }
+    eventList[eventId].addTicketSeller(_sellerStake, _ticketsToSell, _sellerId, msg.sender);
   }
 
-  function addDelegatorToSeller(uint _eventId, uint _sellerId, uint _delegatorAmount) public {
-    // first, find the event
-    // TODO: add a revert check here
-    for(uint i=0; i<eventList.length; i++){
-      if(eventList[i].eventId() == _eventId) {
-        eventList[i].addDelegatorToSeller(_sellerId, _delegatorAmount, msg.sender);
-      }
-    }
+//  function sellTicket(uint ticketPrice, uint ticketCount, uint eventId, uint sellerId, address ticketRecvAddress) public {
+//    eventList[eventId].sellTicket(ticketPrice, ticketCount, sellerId, ticketRecvAddress);
+//  }
+
+  function addDelegatorToSeller(uint eventId, uint sellerId, uint delegatorAmount) public {
+    eventList[eventId].addDelegatorToSeller(sellerId, delegatorAmount, msg.sender);
   }
 
   function printEvents() public view {
-    for(uint i=0; i<eventList.length; i++) {
-      eventList[i].print();
+    for(uint i=0; i<eventIds.length; i++) {
+      eventList[eventIds[i]].print();
     }
   }
 
