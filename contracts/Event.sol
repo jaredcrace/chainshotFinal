@@ -12,10 +12,8 @@ contract Event {
     uint public eventId;
     address public eventAddress;
     Promoter[] promoterList;
-
     mapping(uint => Seller) public ticketSellerList;
     uint[] public sellerIds;
-
 
     constructor(
       string memory _name, 
@@ -45,6 +43,10 @@ contract Event {
         Seller ts = new Seller(sender, stakeAmount, ticektsToSell, sellerId);
         ticketSellerList[sellerId] = ts;
         sellerIds.push(sellerId);
+    }
+
+    function sellTicket(uint ticketPrice, uint purchaseCount, uint sellerId, address ticketRecvAddress) public {
+        // pass through function to the Seller contract
     }
 
     function addDelegatorToSeller(uint sellerId, uint delegatorAmount, address sender) public {
