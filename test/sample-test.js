@@ -50,6 +50,10 @@ describe("TicketMundo", function () {
 
     await contractEventMundo.print();
 
+    // make a sell from Node
+    await contractEventMundo.connect(addr4).sellTicket(25, 2, sellerId_1, 0x44);
+    await contractEventMundo.printSeller(sellerId_1);
+
     assert.equal(10,10);
   });
 

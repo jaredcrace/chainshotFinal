@@ -57,8 +57,21 @@ contract Event {
         sellerIds.push(sellerId);
     }
 
-    function sellTicket(uint ticketPrice, uint purchaseCount, uint sellerId, address ticketRecvAddress) public {
-        // pass through function to the Seller contract
+    function sellTicket(uint ticketPrice, uint purchaseCount, uint sellerId, uint ticketRecvAddress) public {
+        console.log("ticketPrice is:", ticketPrice);
+        console.log("ticketRecvAddress is:", ticketRecvAddress);
+        // TODO: ensure that the sellerId and address are correct or revert
+
+        // deduct tickets from seller ticket account
+        ticketSellerList[sellerId].removeTickets(purchaseCount);
+
+        // send money to seller and seller sends money to delegator
+        // send money to promoter
+        // send money to event creator
+
+        // send NFT based ticket to the reciveAddress
+
+        // TODO: how do I send money to a contract?
     }
 
     function addDelegatorToSeller(uint sellerId, uint delegatorAmount, address sender) public {
@@ -67,6 +80,10 @@ contract Event {
     
     function addDelegatorToSellerV2(uint sellerId, uint delegatorAmount) public {
         ticketSellerList[sellerId].addDelegator(delegatorAmount, msg.sender);
+    }
+
+    function printSeller(uint sellerId) public view {
+        ticketSellerList[sellerId].print();
     }
 
     function print() public view {

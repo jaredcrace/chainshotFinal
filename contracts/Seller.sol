@@ -17,6 +17,11 @@ contract Seller {
         sellerId = _sellerId;
     }
 
+    function removeTickets(uint ticketsToRemove) public {
+        // TODO: require that only the event address can do this
+        ticketsToSell -= ticketsToRemove;
+    }
+
     function addDelegator(uint _delegatorAmount, address _sender) public {
         Delegator dg = new Delegator(_sender, _delegatorAmount);
         delegatorList.push(dg);
