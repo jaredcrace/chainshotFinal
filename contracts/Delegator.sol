@@ -12,7 +12,7 @@ contract Delegator {
     }
 
     function print() public view {
-        console.log("    --Delegator--");
+        console.log("    ***");
         console.log("    delegatorAddress:", delegatorAddress);
         console.log("    delegatorAmount:", delegatorAmount);
     }

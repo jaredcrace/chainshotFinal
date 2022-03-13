@@ -23,11 +23,15 @@ contract Seller {
     }
 
     function print() public view {
-        console.log("  --Seller--");
+        console.log("  ***");
         console.log("  sellerId:", sellerId);
         console.log("  sellerAddress:", sellerAddress);
         console.log("  stakeAmount:", stakeAmount);
         console.log("  ticketsToSell:", ticketsToSell);
+
+        console.log("    ----------");
+        console.log("    Delegators");
+        console.log("    ----------");
 
         for(uint i=0; i<delegatorList.length; i++) {
             delegatorList[i].print();
