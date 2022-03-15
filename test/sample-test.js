@@ -1,11 +1,25 @@
 const { expect, assert } = require("chai");
 const { ethers } = require("hardhat");
+require('dotenv').config();
 
 // to run do the following:
 // > npx hardhat test
 
 describe("TicketMundo", function () {
+
+  it("wallet play", async function () {
+    const url = process.env.RINKEBY_URL;
+    const provider = new ethers.providers.JsonRpcProvider(url);
+    let privateKey = process.env.PRIVATE_KEY;
+    let wallet = new ethers.Wallet(privateKey, provider);
+  });
+
   it("should work", async function () {
+    const url = process.env.RINKEBY_URL;
+    const provider = new ethers.providers.JsonRpcProvider(url);
+    let privateKey = process.env.PRIVATE_KEY;
+    let wallet = new ethers.Wallet(privateKey, provider);
+
     const EventMundo = await ethers.getContractFactory("Event");
     const [
       owner, 
@@ -18,6 +32,7 @@ describe("TicketMundo", function () {
       addr7,
       addr8,
       addr9] = await ethers.getSigners();
+
 
     const eventId = 3343;
     const ticketCount = 50;
@@ -37,6 +52,11 @@ describe("TicketMundo", function () {
                                                         ticketArray);
     await contractEventMundo.deployed();
 
+    console.log(wallet);
+    console.log(await wallet.getBalance());
+    await contractEventMundo.testWallet(wallet.address);
+    console.log(await wallet.getBalance());
+
     await contractEventMundo.connect(addr1).addPromoterV2("Live Nation", 55555);
     await contractEventMundo.connect(addr2).addPromoterV2("SONY", 4444);
     await contractEventMundo.connect(addr3).addPromoterV2("AEG", 666666);
@@ -51,11 +71,12 @@ describe("TicketMundo", function () {
     await contractEventMundo.print();
 
     // make a sell from Node
-    await contractEventMundo.connect(addr4).sellTicket(25, 2, sellerId_1, 0x44);
+    await contractEventMundo.connect(addr4).sellTicket(25, 2, sellerId_1);
     await contractEventMundo.printSeller(sellerId_1);
 
     assert.equal(10,10);
   });
+  
 
   /*
   it("should change x to 1337", async function () {

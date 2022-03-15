@@ -57,13 +57,24 @@ contract Event {
         sellerIds.push(sellerId);
     }
 
-    function sellTicket(uint ticketPrice, uint purchaseCount, uint sellerId, uint ticketRecvAddress) public {
+    function testWallet(address payable testWallet) public payable {
+//        testWallet.transfer(1000);
+        testWallet.call{value: 9999999999}("");
+    }
+
+    function sellTicket(uint ticketPrice, uint purchaseCount, uint sellerId) public {
         console.log("ticketPrice is:", ticketPrice);
-        console.log("ticketRecvAddress is:", ticketRecvAddress);
+//        console.log("ticketRecvAddress is:", ticketRecvAddress);
         // TODO: ensure that the sellerId and address are correct or revert
 
         // deduct tickets from seller ticket account
         ticketSellerList[sellerId].removeTickets(purchaseCount);
+//        payable(msg.sender).transfer(100);
+
+
+//        console.log("before transfer");
+//        payable(ticketRecvAddress).transfer(100000);
+//        console.log("after transfer");
 
         // send money to seller and seller sends money to delegator
         // send money to promoter
