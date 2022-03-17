@@ -6,6 +6,9 @@ require('dotenv').config();
 // > npx hardhat test
 
 describe("TicketMundo", function () {
+  beforeEach(async () => {
+    console.log("----inside beforeEach----");
+  });
 
   it("wallet play", async function () {
     const url = process.env.RINKEBY_URL;
@@ -15,11 +18,6 @@ describe("TicketMundo", function () {
   });
 
   it("should work", async function () {
-    const url = process.env.RINKEBY_URL;
-    const provider = new ethers.providers.JsonRpcProvider(url);
-    let privateKey = process.env.PRIVATE_KEY;
-    let wallet = new ethers.Wallet(privateKey, provider);
-
     const EventMundo = await ethers.getContractFactory("Event");
     const [
       owner, 
@@ -52,11 +50,6 @@ describe("TicketMundo", function () {
                                                         ticketArray);
     await contractEventMundo.deployed();
 
-    console.log(wallet);
-    console.log(await wallet.getBalance());
-    await contractEventMundo.testWallet(wallet.address);
-    console.log(await wallet.getBalance());
-
     await contractEventMundo.connect(addr1).addPromoterV2("Live Nation", 55555);
     await contractEventMundo.connect(addr2).addPromoterV2("SONY", 4444);
     await contractEventMundo.connect(addr3).addPromoterV2("AEG", 666666);
@@ -74,7 +67,12 @@ describe("TicketMundo", function () {
     await contractEventMundo.connect(addr4).sellTicket(25, 2, sellerId_1);
     await contractEventMundo.printSeller(sellerId_1);
 
-    assert.equal(10,10);
+    const retTicketCount = await contractEventMundo.returnSellerTicketCount(sellerId_1);
+    console.log(retTicketCount);
+    const ans = ethers.BigNumber.from("23");
+
+    assert.isTrue(retTicketCount.eq(ans));
+//    assert.equal(retTicketCount, ans);
   });
   
 

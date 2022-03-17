@@ -57,10 +57,16 @@ contract Event {
         sellerIds.push(sellerId);
     }
 
+    function returnSellerTicketCount(uint sellerId) public view returns (uint) {
+        return ticketSellerList[sellerId].ticketsToSell();
+    }
+
+    /*
     function testWallet(address payable testWallet) public payable {
-//        testWallet.transfer(1000);
+        testWallet.transfer(1000);
         testWallet.call{value: 9999999999}("");
     }
+    */
 
     function sellTicket(uint ticketPrice, uint purchaseCount, uint sellerId) public {
         console.log("ticketPrice is:", ticketPrice);
@@ -69,20 +75,12 @@ contract Event {
 
         // deduct tickets from seller ticket account
         ticketSellerList[sellerId].removeTickets(purchaseCount);
-//        payable(msg.sender).transfer(100);
 
-
-//        console.log("before transfer");
-//        payable(ticketRecvAddress).transfer(100000);
-//        console.log("after transfer");
-
-        // send money to seller and seller sends money to delegator
-        // send money to promoter
-        // send money to event creator
+        // send token to seller
+        // send token to promoter
+        // send token to event creator
 
         // send NFT based ticket to the reciveAddress
-
-        // TODO: how do I send money to a contract?
     }
 
     function addDelegatorToSeller(uint sellerId, uint delegatorAmount, address sender) public {
