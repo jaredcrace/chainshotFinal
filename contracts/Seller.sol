@@ -18,7 +18,6 @@ contract Seller {
     }
 
     function returnDelegatorStake() public view returns (uint) {
-        console.log("returnDelegatorStake:", delegatorList[0].delegatorAmount());
         return delegatorList[0].delegatorAmount();
     }
 
