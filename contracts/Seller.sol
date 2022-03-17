@@ -17,6 +17,11 @@ contract Seller {
         sellerId = _sellerId;
     }
 
+    function returnDelegatorStake() public view returns (uint) {
+        console.log("returnDelegatorStake:", delegatorList[0].delegatorAmount());
+        return delegatorList[0].delegatorAmount();
+    }
+
     function removeTickets(uint ticketsToRemove) public {
         // TODO: require that only the event address can do this
         ticketsToSell -= ticketsToRemove;

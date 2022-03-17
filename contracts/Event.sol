@@ -87,6 +87,9 @@ contract Event {
         // send NFT based ticket to the reciveAddress
     }
 
+    function returnDelegatorStake(uint sellerId) public view returns (uint) {
+        return ticketSellerList[sellerId].returnDelegatorStake();
+    }
     function addDelegatorToSeller(uint sellerId, uint delegatorAmount, address sender) public {
         ticketSellerList[sellerId].addDelegator(delegatorAmount, sender);
     }
