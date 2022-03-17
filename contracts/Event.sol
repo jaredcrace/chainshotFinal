@@ -11,7 +11,7 @@ contract Event {
     uint256[] public ticketArray;
     uint public eventId;
     address public eventAddress;
-    Promoter[] promoterList;
+    Promoter[] public promoterList;
     mapping(uint => Seller) public ticketSellerList;
     uint[] public sellerIds;
     uint public totalPromoterStake;
@@ -32,6 +32,10 @@ contract Event {
         for(uint i=0; i<ticketCount; i++) {
             ticketArray.push(_ticketArray[i]);
         }
+    }
+
+    function returnPromoterStake() public view returns (uint) {
+        return promoterList[0].stakeAmount();
     }
 
     function addPromoterV2(string memory promoterName, uint promoterStake) public {
